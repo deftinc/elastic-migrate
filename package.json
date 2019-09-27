@@ -1,0 +1,27 @@
+{
+  "name": "esmigrate",
+  "version": "0.0.1",
+  "description": "Make elasicsearch migrations easy",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deftinc/esmigrate.git"
+  },
+  "keywords": [
+    "elasticsearch",
+    "migrations",
+    "admin",
+    "management",
+    "index",
+    "indices"
+  ],
+  "author": "patrick.wiseman@deft.services",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deftinc/esmigrate/issues"
+  },
+  "homepage": "https://github.com/deftinc/esmigrate#readme"
+}
