@@ -1,5 +1,5 @@
 {
-  "name": "esmigrate",
+  "name": "elastic-migrate",
   "version": "0.0.1",
   "description": "Make elasicsearch migrations easy",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/deftinc/esmigrate.git"
+    "url": "git+https://github.com/deftinc/elastic-migrate.git"
   },
   "keywords": [
     "elasticsearch",
@@ -21,7 +21,7 @@
   "author": "patrick.wiseman@deft.services",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/deftinc/esmigrate/issues"
+    "url": "https://github.com/deftinc/elastic-migrate/issues"
   },
-  "homepage": "https://github.com/deftinc/esmigrate#readme"
+  "homepage": "https://github.com/deftinc/elastic-migrate#readme"
 }
