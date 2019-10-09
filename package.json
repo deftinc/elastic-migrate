@@ -1,10 +1,25 @@
 {
   "name": "elastic-migrate",
   "version": "0.0.1",
-  "description": "Make elasicsearch migrations easy",
+  "description": "Easy elasicsearch index migrations",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "elastic-migrate": "./src/elastic-migrate.js",
+    "elastic-migrate-up": "./src/elastic-migrate-up.js",
+    "elastic-migrate-down": "./src/elastic-migrate-down.js",
+    "elastic-migrate-list": "./src/elastic-migrate-list.js",
+    "elastic-migrate-setup": "./src/elastic-migrate-setup.js"
+  },
+  "devDependencies": {},
+  "dependencies": {
+    "aws-sdk": "^2.347.0",
+    "commander": "^2.18.0",
+    "elasticsearch": "^15.1.1",
+    "http-aws-es": "^6.0.0",
+    "mustache": "^3.0.0"
   },
   "repository": {
     "type": "git",
