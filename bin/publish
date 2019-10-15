@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+yarn publish
+
+VERSION=$(jq -er '.version'  package.json)
+TAGNAME="v$VERSION"
+
+git tag $TAGNAME
+git push origin $TAGNAME
+
+docker build -t "deftinc/elastic-migrate:$TAGNAME" .
+docker push deftinc/elastic-migrate:$TAGNAME
