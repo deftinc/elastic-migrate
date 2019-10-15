@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+describe() {
+  echo "===> $1…"
+}
+
+describe "Running integration tests"
+docker-compose build elastic-migrate
+docker-compose run elastic-migrate ci
