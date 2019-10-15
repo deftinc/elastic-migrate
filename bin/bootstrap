@@ -1,0 +1,77 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+describe() {
+  echo "===> $1…"
+}
+
+squelch() {
+  $@ > /dev/null 2>&1
+}
+
+install_brew_dependencies() {
+  squelch brew bundle check || {
+    describe "Installing Homebrew dependencies"
+    brew bundle
+  }
+}
+
+configure_asdf_for_bash() {
+  squelch grep -Fq 'asdf' $HOME/.bash_profile || {
+    describe "Configuring asdf for bash"
+    echo "# Setup for asdf" >> ~/.bash_profile
+    echo ". $(brew --prefix asdf)/asdf.sh" >> ~/.bash_profile
+    echo ". $(brew --prefix asdf)/etc/bash_completion.d/asdf.bash" >> ~/.bash_profile
+    . $(brew --prefix asdf)/asdf.sh
+  }
+}
+
+add_asdf_node_plugin() {
+  if [ -z "$(asdf plugin-list | grep nodejs)" ]; then
+    describe "Installing asdf nodejs plugin"
+    asdf plugin-add nodejs https://github.com/asdf-vm/asdf-nodejs.git
+    bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
+  fi
+}
+
+update_asdf_plugins() {
+  describe "Updating asdf language plugins"
+  asdf plugin-update --all
+}
+
+asdf_install_tools() {
+  desired_node=$(grep nodejs .tool-versions | sed 's/^nodejs \(.*\)$/\1/')
+  actual_node=$(node -v | cut -d 'v' -f 2)
+  if [ "$actual_node" != "$desired_node" ]; then
+    describe "Installing .tools-versions languages"
+    asdf install
+  fi
+}
+
+install_yarn_version() {
+  yarn_version=$(cat package.json | jq -er '.engines.yarn')
+  if [ "$(yarn --version)" != "$yarn_version" ]; then
+    describe "Installing yarn version from package.json"
+    npm install -g yarn@${yarn_version}
+  fi
+}
+
+install_node_packages() {
+  squelch yarn check --verify-tree || {
+    describe "Installing node library dependencies"
+    yarn install
+  }
+}
+
+
+install_brew_dependencies
+configure_asdf_for_bash
+add_asdf_node_plugin
+# update_asdf_plugins
+# update_asdf_nodejs_contributor_gpg_keys
+asdf_install_tools
+install_yarn_version
+install_node_packages
