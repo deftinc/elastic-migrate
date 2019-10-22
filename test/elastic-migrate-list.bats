@@ -67,7 +67,7 @@ teardown() {
 
 @test "[elastic-migrate LIST] should format a migrated migration on the host as '[*] version description'" {
   setup_test_migrations
-  curl -s -X PUT "$ELASTICSEARCH_HOST/$ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME/migration/1" -H 'Content-Type: application/json' -d'
+  curl -s -X PUT "$ELASTICSEARCH_HOST/$ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME/_doc/1" -H 'Content-Type: application/json' -d'
   {
       "version" : "20181013140148",
       "description" : "create_foo_bar",

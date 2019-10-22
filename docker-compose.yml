@@ -13,6 +13,6 @@ services:
       - /home/elastic-migrate/node_modules
       - ./migrations:/home/elastic-migrate/migrations
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:6.3.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.4.0
     environment:
       - discovery.type=single-node

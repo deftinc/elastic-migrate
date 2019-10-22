@@ -45,7 +45,7 @@ teardown() {
 
 @test "[elastic-migrate SETUP] should be able to connect to elasticsearch" {
   OUTPUT=$(curl -s $ELASTICSEARCH_HOST | jq '.version.number' | tr -d '"')
-  assert_equal 6.3.2 $OUTPUT
+  assert_equal 7.4.0 $OUTPUT
 }
 
 @test "[elastic-migrate SETUP] should show the usage prompt when given the short form help option" {
@@ -81,7 +81,7 @@ teardown() {
   export ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME=test_elastic_migrate_migrations
   run elastic-migrate setup
   assert_success
-  OUTPUT=$(curl -s -X GET $ELASTICSEARCH_HOST/$ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME/_mapping | jq ".$ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME.mappings.migration.properties.description.type" | tr -d '"')
+  OUTPUT=$(curl -s -X GET $ELASTICSEARCH_HOST/$ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME/_mapping | jq ".$ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME.mappings.properties.description.type" | tr -d '"')
   assert_equal text $OUTPUT
   teardown_elastic_migrate
 }

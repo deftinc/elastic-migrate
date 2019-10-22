@@ -18,7 +18,7 @@ const commandTimestamp = new Date().getTime();
 const logMigrationRun = async migration => {
   return getClient().index({
     index: elasticMigrateMigrationsIndexName,
-    type: 'migration',
+    type: '_doc',
     body: {
       version: migration.version,
       description: migration.description,

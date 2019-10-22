@@ -82,7 +82,7 @@ const getClient = () => {
 const getHostMigrations = async () => {
   const {hits: {hits}} = await getClient().search({
     index: elasticMigrateMigrationsIndexName,
-    // type: "migration",
+    type: '_doc',
     body: {},
     size: 200,
   });
@@ -125,19 +125,17 @@ const createMigrationsIndex = async () => getClient().indices.create({
   index: elasticMigrateMigrationsIndexName,
   body: {
     mappings: {
-      migration: {
-        properties: {
-          description: {
-            type: "text"
-          },
-          version: {
-            type: "date",
-            format: "yyyyMMddHHmmss"
-          },
-          migratedAt: {
-            type: "date",
-            format: "epoch_millis"
-          }
+      properties: {
+        description: {
+          type: "text"
+        },
+        version: {
+          type: "date",
+          format: "yyyyMMddHHmmss"
+        },
+        migratedAt: {
+          type: "date",
+          format: "epoch_millis"
         }
       }
     }
