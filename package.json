@@ -1,6 +1,6 @@
 {
   "name": "elastic-migrate",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "Easy elasicsearch index migrations",
   "main": "index.js",
   "scripts": {
