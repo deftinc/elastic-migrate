@@ -90,11 +90,10 @@ const getHostMigrations = async () => {
 };
 
 const getLocalMigrations = async () => {
-  const migrationsPath = process.env.ELASTIC_MIGRATE_MIGRATIONS_PATH  || './migrations'
-  const files = (await readdir(path.resolve(migrationsPath)))
+  const files = (await readdir(elasticMigrateMigrationsPath))
   return files.map(item => {
       const [filename, version, description] = /(\d*)\_(.*).js/gi.exec(item);
-      return {description, version, filepath: path.resolve(migrationsPath, filename)};
+      return {description, version, filepath: path.resolve(elasticMigrateMigrationsPath, filename)};
     })
     .sort((a, b) => a.version.localeCompare(b.version));
 };
