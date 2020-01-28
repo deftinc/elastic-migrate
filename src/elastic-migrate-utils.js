@@ -3,7 +3,7 @@ const path = require('path');
 const exec = util.promisify(require('child_process').exec);
 const readdir = util.promisify(require('fs').readdir);
 const elasticMigrateMigrationsIndexName = process.env.ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME || 'elastic_migrate_migrations';
-const elasticMigrateMigrationsPath = process.env.ELASTIC_MIGRATE_MIGRATIONS_PATH || path.resolve('./migrations');
+const elasticMigrateMigrationsPath = path.resolve(process.env.ELASTIC_MIGRATE_MIGRATIONS_PATH || './migrations');
 const {Client} = require('elasticsearch');
 const ConfigurationError = require("./configuration-error");
 const RuntimeError = require("./runtime-error");
@@ -90,10 +90,10 @@ const getHostMigrations = async () => {
 };
 
 const getLocalMigrations = async () => {
-  const files = (await readdir(path.resolve('./migrations')))
+  const files = (await readdir(elasticMigrateMigrationsPath))
   return files.map(item => {
       const [filename, version, description] = /(\d*)\_(.*).js/gi.exec(item);
-      return {description, version, filepath: path.resolve('./migrations', filename)};
+      return {description, version, filepath: path.resolve(elasticMigrateMigrationsPath, filename)};
     })
     .sort((a, b) => a.version.localeCompare(b.version));
 };
