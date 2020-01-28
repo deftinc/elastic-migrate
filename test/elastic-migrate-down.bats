@@ -70,6 +70,19 @@ teardown() {
   assert_line "Migrating version=20181013140224 remove_foo"
 }
 
+@test "[elastic-migrate DOWN] with env MIGRATIONS_PATH config should output the default target version (down one) when missing" {
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH_BAK=$ELASTIC_MIGRATE_MIGRATIONS_PATH
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH=./custom_migrations
+  setup_custom_test_migrations
+  elastic-migrate up
+  refresh_index
+  run elastic-migrate down
+  assert_success
+  assert_line "Migrating version=20181013140224 remove_foo"
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH=$ELASTIC_MIGRATE_MIGRATIONS_PATH_BAK
+  unset ELASTICSEARCH_HOST_BAK
+}
+
 @test "[elastic-migrate DOWN] should output nothing to do if no migrations have been run on host" {
   setup_test_migrations
   run elastic-migrate down

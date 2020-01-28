@@ -58,6 +58,17 @@ teardown() {
   assert_line_count 4
 }
 
+@test "[elastic-migrate LIST] with environment config should list a line for each migration locally" {
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH_BAK=$ELASTIC_MIGRATE_MIGRATIONS_PATH
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH=./custom_migrations
+  setup_custom_test_migrations
+  run elastic-migrate list
+  assert_success
+  assert_line_count 4
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH=$ELASTIC_MIGRATE_MIGRATIONS_PATH_BAK
+  unset ELASTICSEARCH_HOST_BAK
+}
+
 @test "[elastic-migrate LIST] should format a non-migrated migration on the host as '[ ] version description'" {
   setup_test_migrations
   run elastic-migrate list

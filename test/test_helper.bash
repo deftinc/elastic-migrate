@@ -24,6 +24,11 @@ setup_test_migrations() {
   cp $BATS_BASE_DIR/test/fixtures/* "$ELASTIC_MIGRATE_TEST_DIR/migrations"
 }
 
+setup_custom_test_migrations() {
+  mkdir -p "$ELASTIC_MIGRATE_TEST_DIR/custom_migrations"
+  cp $BATS_BASE_DIR/test/fixtures/* "$ELASTIC_MIGRATE_TEST_DIR/custom_migrations"
+}
+
 setup_test_directory() {
   mkdir -p "$ELASTIC_MIGRATE_TEST_DIR/elastic-migrate"
   cd "$ELASTIC_MIGRATE_TEST_DIR"

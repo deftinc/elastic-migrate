@@ -67,6 +67,17 @@ teardown() {
   assert_line "Migrating version=20181013140224 remove_foo"
 }
 
+@test "[elastic-migrate UP] with env MIGRATIONS_PATH should output the default target version when missing" {
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH_BAK=$ELASTIC_MIGRATE_MIGRATIONS_PATH
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH=./custom_migrations
+  setup_custom_test_migrations
+  run elastic-migrate up
+  assert_success
+  assert_line "Migrating version=20181013140224 remove_foo"
+  export ELASTIC_MIGRATE_MIGRATIONS_PATH=$ELASTIC_MIGRATE_MIGRATIONS_PATH_BAK
+  unset ELASTICSEARCH_HOST_BAK
+}
+
 @test "[elastic-migrate UP] should output nothing to do if already on the latest version" {
   setup_test_migrations
   elastic-migrate up
@@ -86,6 +97,7 @@ teardown() {
   assert_equal 3 $NEW_MIGRATED_COUNT
   assert_success
 }
+
 @test "[elastic-migrate UP] should migrate to the latest version when version is not given" {
   setup_test_migrations
   MIGRATED_COUNT=$(curl -s -X GET $ELASTICSEARCH_HOST/$ELASTIC_MIGRATE_MIGRATIONS_INDEX_NAME/_count\?q=\* | jq '.count')
